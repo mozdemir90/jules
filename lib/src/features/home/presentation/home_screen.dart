@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../../../common_widgets/primary_button.dart';
 import '../../numbers/presentation/number_screen.dart';
+import '../../animals/presentation/animals_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -14,10 +15,19 @@ class HomeScreen extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             PrimaryButton(
-              text: 'Learn Numbers',
+              text: 'Numbers',
               onPressed: () {
                 Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const NumberScreen()),
+                );
+              },
+            ),
+            const SizedBox(height: 16),
+            PrimaryButton(
+              text: 'Animals',
+              onPressed: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const AnimalsScreen()),
                 );
               },
             ),
