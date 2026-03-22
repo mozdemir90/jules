@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
-import '../data/number_provider.dart';
+import '../data/animal_provider.dart';
 
-class NumberScreen extends ConsumerStatefulWidget {
-  const NumberScreen({super.key});
+class AnimalsScreen extends ConsumerStatefulWidget {
+  const AnimalsScreen({super.key});
 
   @override
-  ConsumerState<NumberScreen> createState() => _NumberScreenState();
+  ConsumerState<AnimalsScreen> createState() => _AnimalsScreenState();
 }
 
-class _NumberScreenState extends ConsumerState<NumberScreen> {
+class _AnimalsScreenState extends ConsumerState<AnimalsScreen> {
   late final PageController _pageController;
   int _currentPageIndex = 0;
 
@@ -26,10 +26,10 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
     super.dispose();
   }
 
-  void playNumberAudio(int number) async {
+  void playAnimalAudio(String audioPath) async {
     final player = AudioPlayer();
     try {
-      await player.play(AssetSource('audio/numbers/$number.mp3'));
+      await player.play(AssetSource(audioPath));
     } catch (e) {
       debugPrint("Ses çalınırken hata oluştu: $e");
     }
@@ -37,27 +37,25 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final numbers = ref.watch(numberListProvider);
+    final animals = ref.watch(animalListProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Numbers'),
+        title: const Text('Animals'),
       ),
       body: Column(
         children: [
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-              itemCount: numbers.length,
+              itemCount: animals.length,
               onPageChanged: (index) {
                 setState(() {
                   _currentPageIndex = index;
                 });
               },
               itemBuilder: (context, index) {
-                final number = numbers[index];
-                // Resim yolunu dinamik olarak oluşturuyoruz: assets/images/numbers/1.png
-                final imagePath = 'assets/images/numbers/${number.digit}.png';
+                final animal = animals[index];
 
                 return Padding(
                   padding: const EdgeInsets.symmetric(
@@ -65,7 +63,7 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
                     vertical: 32.0,
                   ),
                   child: Card(
-                    color: Color(number.colorValue),
+                    color: Color(animal.colorValue),
                     elevation: 8,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32),
@@ -73,8 +71,8 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
                     child: InkWell(
                       borderRadius: BorderRadius.circular(32),
                       onTap: () {
-                        debugPrint('${number.digit} tıklandı');
-                        playNumberAudio(number.digit);
+                        debugPrint('${animal.name} tıklandı');
+                        playAnimalAudio(animal.audioPath);
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(24.0),
@@ -87,7 +85,7 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
                                 child: Image.asset(
-                                  imagePath,
+                                  animal.imagePath,
                                   fit: BoxFit.contain,
                                   errorBuilder: (context, error, stackTrace) {
                                     return const Icon(
@@ -100,42 +98,25 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
                               ),
                             ),
                             const SizedBox(height: 24),
-                            // Sayı
-                            Expanded(
-                              flex: 3,
-                              child: Center(
-                                child: Text(
-                                  '${number.digit}',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .displayLarge
-                                      ?.copyWith(
-                                        fontSize: 120,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                        shadows: [
+                            // Kelime
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 16.0),
+                              child: Text(
+                                animal.name,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .displayMedium
+                                    ?.copyWith(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                      letterSpacing: 1.5,
+                                      shadows: [
                                           const Shadow(
                                             color: Colors.black26,
                                             offset: Offset(4, 4),
                                             blurRadius: 8,
                                           ),
                                         ],
-                                      ),
-                                ),
-                              ),
-                            ),
-                            // Kelime
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: Text(
-                                number.word,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headlineMedium
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      letterSpacing: 1.5,
                                     ),
                               ),
                             ),
@@ -154,7 +135,7 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                numbers.length,
+                animals.length,
                 (index) => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   margin: const EdgeInsets.symmetric(horizontal: 4.0),
