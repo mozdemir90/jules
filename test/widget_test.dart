@@ -10,12 +10,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:kids_learn/main.dart';
 
 void main() {
-  testWidgets('App starts and shows Numbers and Animals buttons', (WidgetTester tester) async {
+  testWidgets('App starts and shows new grid categories', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const ProviderScope(child: KidsLearnApp()));
 
-    // Verify that our home screen shows the buttons.
+    // Verify that our home screen shows the new category buttons.
     expect(find.text('Numbers'), findsOneWidget);
     expect(find.text('Animals'), findsOneWidget);
+    expect(find.text('Colors'), findsOneWidget);
+    expect(find.text('Shapes'), findsOneWidget);
   });
 }

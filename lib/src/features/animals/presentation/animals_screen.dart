@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../data/animal_provider.dart';
+import '../../../common_widgets/flashcard_view.dart';
 
 class AnimalsScreen extends ConsumerStatefulWidget {
   const AnimalsScreen({super.key});
@@ -13,23 +14,26 @@ class AnimalsScreen extends ConsumerStatefulWidget {
 class _AnimalsScreenState extends ConsumerState<AnimalsScreen> {
   late final PageController _pageController;
   int _currentPageIndex = 0;
+  late final AudioPlayer _audioPlayer;
 
   @override
   void initState() {
     super.initState();
     _pageController = PageController(viewportFraction: 0.85);
+    _audioPlayer = AudioPlayer();
   }
 
   @override
   void dispose() {
     _pageController.dispose();
+    _audioPlayer.dispose();
     super.dispose();
   }
 
   void playAnimalAudio(String audioPath) async {
-    final player = AudioPlayer();
+    await _audioPlayer.stop();
     try {
-      await player.play(AssetSource(audioPath));
+      await _audioPlayer.play(AssetSource(audioPath));
     } catch (e) {
       debugPrint("Ses çalınırken hata oluştu: $e");
     }
@@ -57,74 +61,14 @@ class _AnimalsScreenState extends ConsumerState<AnimalsScreen> {
               itemBuilder: (context, index) {
                 final animal = animals[index];
 
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 8.0,
-                    vertical: 32.0,
-                  ),
-                  child: Card(
-                    color: Color(animal.colorValue),
-                    elevation: 8,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(32),
-                      onTap: () {
-                        debugPrint('${animal.name} tıklandı');
-                        playAnimalAudio(animal.audioPath);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(24.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // Resim
-                            Expanded(
-                              flex: 5,
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Image.asset(
-                                  animal.imagePath,
-                                  fit: BoxFit.contain,
-                                  errorBuilder: (context, error, stackTrace) {
-                                    return const Icon(
-                                      Icons.image,
-                                      color: Colors.white54,
-                                      size: 120,
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            const SizedBox(height: 24),
-                            // Kelime
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 16.0),
-                              child: Text(
-                                animal.name,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .displayMedium
-                                    ?.copyWith(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      letterSpacing: 1.5,
-                                      shadows: [
-                                          const Shadow(
-                                            color: Colors.black26,
-                                            offset: Offset(4, 4),
-                                            blurRadius: 8,
-                                          ),
-                                        ],
-                                    ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                return FlashcardView(
+                  title: animal.name,
+                  imagePath: animal.imagePath,
+                  backgroundColor: animal.colorValue,
+                  onTap: () {
+                    debugPrint('${animal.name} tıklandı');
+                    playAnimalAudio(animal.audioPath);
+                  },
                 );
               },
             ),
