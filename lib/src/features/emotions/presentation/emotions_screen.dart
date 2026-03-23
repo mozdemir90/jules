@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
-import '../data/number_provider.dart';
+import '../data/emotions_provider.dart';
 import '../../../common_widgets/flashcard_view.dart';
 
-class NumberScreen extends ConsumerStatefulWidget {
-  const NumberScreen({super.key});
+class EmotionsScreen extends ConsumerStatefulWidget {
+  const EmotionsScreen({super.key});
 
   @override
-  ConsumerState<NumberScreen> createState() => _NumberScreenState();
+  ConsumerState<EmotionsScreen> createState() => _EmotionsScreenState();
 }
 
-class _NumberScreenState extends ConsumerState<NumberScreen> {
+class _EmotionsScreenState extends ConsumerState<EmotionsScreen> {
   late final PageController _pageController;
   int _currentPageIndex = 0;
   late final AudioPlayer _audioPlayer;
@@ -30,10 +30,10 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
     super.dispose();
   }
 
-  void playNumberAudio(int number) async {
+  void playAudio(String audioPath) async {
     await _audioPlayer.stop();
     try {
-      await _audioPlayer.play(AssetSource('audio/numbers/$number.mp3'));
+      await _audioPlayer.play(AssetSource(audioPath));
     } catch (e) {
       debugPrint("Ses çalınırken hata oluştu: $e");
     }
@@ -41,56 +41,41 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final numbers = ref.watch(numberListProvider);
+    final items = ref.watch(emotionsListProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Numbers'),
-      ),
+      appBar: AppBar(title: const Text('Emotions')),
       body: Column(
         children: [
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-              itemCount: numbers.length,
-              onPageChanged: (index) {
-                setState(() {
-                  _currentPageIndex = index;
-                });
-              },
+              itemCount: items.length,
+              onPageChanged: (index) => setState(() => _currentPageIndex = index),
               itemBuilder: (context, index) {
-                final number = numbers[index];
-                // Resim yolunu dinamik olarak oluşturuyoruz: assets/images/numbers/1.png
-                final imagePath = 'assets/images/numbers/${number.digit}.png';
-
+                final item = items[index];
                 return FlashcardView(
-                  title: '${number.digit}\n${number.word}',
-                  imagePath: imagePath,
-                  backgroundColor: number.colorValue,
-                  onTap: () {
-                    debugPrint('${number.digit} tıklandı');
-                    playNumberAudio(number.digit);
-                  },
+                  title: item.name,
+                  imagePath: item.imagePath,
+                  backgroundColor: item.colorValue,
+                  onTap: () => playAudio(item.audioPath),
                 );
               },
             ),
           ),
-          // Dot indicators
           Padding(
             padding: const EdgeInsets.only(bottom: 32.0, top: 16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: List.generate(
-                numbers.length,
+                items.length,
                 (index) => AnimatedContainer(
                   duration: const Duration(milliseconds: 300),
                   margin: const EdgeInsets.symmetric(horizontal: 4.0),
                   height: 12.0,
                   width: _currentPageIndex == index ? 24.0 : 12.0,
                   decoration: BoxDecoration(
-                    color: _currentPageIndex == index
-                        ? Theme.of(context).primaryColor
-                        : Colors.grey.shade400,
+                    color: _currentPageIndex == index ? Theme.of(context).primaryColor : Colors.grey.shade400,
                     borderRadius: BorderRadius.circular(6.0),
                   ),
                 ),
