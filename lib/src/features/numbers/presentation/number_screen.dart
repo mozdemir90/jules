@@ -1,3 +1,5 @@
+import '../../completion/presentation/completion_page.dart';
+import '../../quiz/presentation/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -52,13 +54,25 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-              itemCount: numbers.length,
+              itemCount: numbers.length + 1,
               onPageChanged: (index) {
                 setState(() {
                   _currentPageIndex = index;
                 });
               },
               itemBuilder: (context, index) {
+                if (index == numbers.length) {
+                  return CompletionPage(
+                    categoryName: 'Numbers',
+                    onPlayQuiz: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => QuizScreen(items: numbers),
+                        ),
+                      );
+                    },
+                  );
+                }
                 final number = numbers[index];
                 // Resim yolunu dinamik olarak oluşturuyoruz: assets/images/numbers/1.png
                 final imagePath = 'assets/images/numbers/${number.digit}.png';
