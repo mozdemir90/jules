@@ -34,3 +34,20 @@ flutter:
     - assets/audio/numbers/
     - assets/images/
     - assets/images/numbers/
+    - assets/images/mascot/
+    - assets/images/animals/
+    - assets/audio/animals/
+    - assets/images/colors/
+    - assets/audio/colors/
+    - assets/images/shapes/
+    - assets/audio/shapes/
+    - assets/images/body_parts/
+    - assets/audio/body_parts/
+    - assets/images/fruits_vegetables/
+    - assets/audio/fruits_vegetables/
+    - assets/images/vehicles/
+    - assets/audio/vehicles/
+    - assets/images/clothes/
+    - assets/audio/clothes/
+    - assets/images/emotions/
+    - assets/audio/emotions/
