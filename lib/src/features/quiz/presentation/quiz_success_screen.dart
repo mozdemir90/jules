@@ -46,7 +46,7 @@ class _QuizSuccessScreenState extends State<QuizSuccessScreen> {
                 ),
                 const SizedBox(height: 32),
                 Image.asset(
-                  'assets/images/mascot/mascot.png',
+                  'assets/images/mascot/abu_karinca.png',
                   height: 200,
                   errorBuilder: (context, error, stackTrace) {
                     return const Icon(

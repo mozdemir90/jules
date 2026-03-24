@@ -123,7 +123,7 @@ class _FlashcardViewState extends State<FlashcardView>
                   child: ScaleTransition(
                     scale: _scaleAnimation,
                     child: Image.asset(
-                      'assets/images/mascot/mascot.png',
+                      'assets/images/mascot/abu_karinca.png',
                       width: 60,
                       height: 60,
                       errorBuilder: (context, error, stackTrace) {
