@@ -1,3 +1,5 @@
+import '../../completion/presentation/completion_page.dart';
+import '../../quiz/presentation/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -50,9 +52,21 @@ class _BodyPartsScreenState extends ConsumerState<BodyPartsScreen> {
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-              itemCount: items.length,
+              itemCount: items.length + 1,
               onPageChanged: (index) => setState(() => _currentPageIndex = index),
               itemBuilder: (context, index) {
+                if (index == items.length) {
+                  return CompletionPage(
+                    categoryName: 'Body Parts',
+                    onPlayQuiz: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => QuizScreen(items: items),
+                        ),
+                      );
+                    },
+                  );
+                }
                 final item = items[index];
                 return FlashcardView(
                   title: item.name,

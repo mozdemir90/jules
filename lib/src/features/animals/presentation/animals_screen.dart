@@ -1,3 +1,5 @@
+import '../../completion/presentation/completion_page.dart';
+import '../../quiz/presentation/quiz_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
@@ -52,13 +54,25 @@ class _AnimalsScreenState extends ConsumerState<AnimalsScreen> {
           Expanded(
             child: PageView.builder(
               controller: _pageController,
-              itemCount: animals.length,
+              itemCount: animals.length + 1,
               onPageChanged: (index) {
                 setState(() {
                   _currentPageIndex = index;
                 });
               },
               itemBuilder: (context, index) {
+                if (index == animals.length) {
+                  return CompletionPage(
+                    categoryName: 'Animals',
+                    onPlayQuiz: () {
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (context) => QuizScreen(items: animals),
+                        ),
+                      );
+                    },
+                  );
+                }
                 final animal = animals[index];
 
                 return FlashcardView(
