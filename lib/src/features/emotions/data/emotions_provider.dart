@@ -1,15 +1,16 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../common_widgets/feature_model.dart';
+import '../../../common_widgets/asset_helper.dart';
 
 part 'emotions_provider.g.dart';
 
 class EmotionsRepository {
   List<FeatureModel> getEmotions() {
     return [
-      const FeatureModel(name: 'Happy', imagePath: 'assets/images/emotions/happy.png', audioPath: 'audio/emotions/happy.mp3', colorValue: 0xFFFFF9C4),
-      const FeatureModel(name: 'Sad', imagePath: 'assets/images/emotions/sad.png', audioPath: 'audio/emotions/sad.mp3', colorValue: 0xFFB3E5FC),
-      const FeatureModel(name: 'Surprised', imagePath: 'assets/images/emotions/surprised.png', audioPath: 'audio/emotions/surprised.mp3', colorValue: 0xFFFFCDD2),
+      FeatureModel(name: 'Happy', imagePath: AssetHelper.getImagePath('emotions', 'happy'), audioPath: AssetHelper.getAudioPath('emotions', 'happy').replaceAll('assets/', ''), colorValue: 0xFFFFF59D),
+      FeatureModel(name: 'Sad', imagePath: AssetHelper.getImagePath('emotions', 'sad'), audioPath: AssetHelper.getAudioPath('emotions', 'sad').replaceAll('assets/', ''), colorValue: 0xFF90CAF9),
+      FeatureModel(name: 'Surprised', imagePath: AssetHelper.getImagePath('emotions', 'surprised'), audioPath: AssetHelper.getAudioPath('emotions', 'surprised').replaceAll('assets/', ''), colorValue: 0xFFFFAB91),
     ];
   }
 }

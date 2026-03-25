@@ -43,7 +43,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Kids Learn')),
+      appBar: AppBar(title: const Text('KidsLearn')),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
@@ -152,7 +152,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvid
                 const SizedBox(height: 32),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.star, size: 32),
-                  label: const Text('Quiz', style: TextStyle(fontSize: 24)),
+                  label: const Text('Play Quiz Mode!', style: TextStyle(fontSize: 24)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber,
                     foregroundColor: Colors.white,

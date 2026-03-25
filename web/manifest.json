@@ -1,6 +1,6 @@
 {
-    "name": "Kids Learn",
-    "short_name": "Kids Learn",
+    "name": "kids_learn",
+    "short_name": "kids_learn",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

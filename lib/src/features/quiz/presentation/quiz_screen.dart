@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'quiz_success_screen.dart';
+import '../../../common_widgets/asset_helper.dart';
 
 class QuizScreen extends StatefulWidget {
   final List<dynamic> items; // Can be NumberModel, AnimalModel, or FeatureModel
@@ -77,7 +78,7 @@ class _QuizScreenState extends State<QuizScreen> {
     try {
       String audioPath = '';
       if (_targetItem.runtimeType.toString() == 'NumberModel') {
-        audioPath = 'audio/numbers/${_targetItem.digit}.mp3';
+        audioPath = AssetHelper.getAudioPath('numbers', _targetItem.digit.toString()).replaceAll('assets/', '');
       } else {
         audioPath = _targetItem.audioPath;
       }
@@ -122,7 +123,7 @@ class _QuizScreenState extends State<QuizScreen> {
     int bgColor = 0xFFEEEEEE;
 
     if (option.runtimeType.toString() == 'NumberModel') {
-      imagePath = 'assets/images/numbers/${option.digit}.png';
+      imagePath = AssetHelper.getImagePath('numbers', option.digit.toString());
       bgColor = option.colorValue;
     } else {
       imagePath = option.imagePath;
