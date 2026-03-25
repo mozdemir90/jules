@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 import '../data/number_provider.dart';
 import '../../../common_widgets/flashcard_view.dart';
-import '../../../common_widgets/asset_helper.dart';
 
 class NumberScreen extends ConsumerStatefulWidget {
   const NumberScreen({super.key});
@@ -36,7 +35,7 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
   void playNumberAudio(int number) async {
     await _audioPlayer.stop();
     try {
-      await _audioPlayer.play(AssetSource(AssetHelper.getAudioPath('numbers', number.toString()).replaceAll('assets/', '')));
+      await _audioPlayer.play(AssetSource('audio/numbers/$number.mp3'));
     } catch (e) {
       debugPrint("Ses çalınırken hata oluştu: $e");
     }
@@ -75,8 +74,8 @@ class _NumberScreenState extends ConsumerState<NumberScreen> {
                   );
                 }
                 final number = numbers[index];
-                // Resim yolunu dinamik olarak oluşturuyoruz
-                final imagePath = AssetHelper.getImagePath('numbers', number.digit.toString());
+                // Resim yolunu dinamik olarak oluşturuyoruz: assets/images/numbers/1.png
+                final imagePath = 'assets/images/numbers/${number.digit}.png';
 
                 return FlashcardView(
                   title: '${number.digit}\n${number.word}',

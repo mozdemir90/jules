@@ -1,25 +1,24 @@
 import '../domain/animal_model.dart';
-import '../../../common_widgets/asset_helper.dart';
 
 class AnimalRepository {
   List<AnimalModel> getAnimals() {
     return [
-      AnimalModel(
+      const AnimalModel(
         name: 'Cat',
-        imagePath: AssetHelper.getImagePath('animals', 'cat'),
-        audioPath: AssetHelper.getAudioPath('animals', 'cat').replaceAll('assets/', ''),
+        imagePath: 'assets/images/animals/cat.png',
+        audioPath: 'audio/animals/cat.mp3',
         colorValue: 0xFFFFCDD2,
       ),
-      AnimalModel(
+      const AnimalModel(
         name: 'Dog',
-        imagePath: AssetHelper.getImagePath('animals', 'dog'),
-        audioPath: AssetHelper.getAudioPath('animals', 'dog').replaceAll('assets/', ''),
+        imagePath: 'assets/images/animals/dog.png',
+        audioPath: 'audio/animals/dog.mp3',
         colorValue: 0xFFB3E5FC,
       ),
-      AnimalModel(
+      const AnimalModel(
         name: 'Cow',
-        imagePath: AssetHelper.getImagePath('animals', 'cow'),
-        audioPath: AssetHelper.getAudioPath('animals', 'cow').replaceAll('assets/', ''),
+        imagePath: 'assets/images/animals/cow.png',
+        audioPath: 'audio/animals/cow.mp3',
         colorValue: 0xFFDCEDC8,
       ),
     ];

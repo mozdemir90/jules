@@ -1,16 +1,15 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../common_widgets/feature_model.dart';
-import '../../../common_widgets/asset_helper.dart';
 
 part 'body_parts_provider.g.dart';
 
 class BodyPartsRepository {
   List<FeatureModel> getBodyParts() {
     return [
-      FeatureModel(name: 'Eyes', imagePath: AssetHelper.getImagePath('body_parts', 'eyes'), audioPath: AssetHelper.getAudioPath('body_parts', 'eyes').replaceAll('assets/', ''), colorValue: 0xFFD1C4E9),
-      FeatureModel(name: 'Nose', imagePath: AssetHelper.getImagePath('body_parts', 'nose'), audioPath: AssetHelper.getAudioPath('body_parts', 'nose').replaceAll('assets/', ''), colorValue: 0xFFC8E6C9),
-      FeatureModel(name: 'Hands', imagePath: AssetHelper.getImagePath('body_parts', 'hands'), audioPath: AssetHelper.getAudioPath('body_parts', 'hands').replaceAll('assets/', ''), colorValue: 0xFFFFE0B2),
+      const FeatureModel(name: 'Eyes', imagePath: 'assets/images/body_parts/eyes.png', audioPath: 'audio/body_parts/eyes.mp3', colorValue: 0xFFD1C4E9),
+      const FeatureModel(name: 'Nose', imagePath: 'assets/images/body_parts/nose.png', audioPath: 'audio/body_parts/nose.mp3', colorValue: 0xFFC8E6C9),
+      const FeatureModel(name: 'Hands', imagePath: 'assets/images/body_parts/hands.png', audioPath: 'audio/body_parts/hands.mp3', colorValue: 0xFFFFE0B2),
     ];
   }
 }

@@ -1,16 +1,15 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import '../../../common_widgets/feature_model.dart';
-import '../../../common_widgets/asset_helper.dart';
 
 part 'clothes_provider.g.dart';
 
 class ClothesRepository {
   List<FeatureModel> getClothes() {
     return [
-      FeatureModel(name: 'T-Shirt', imagePath: AssetHelper.getImagePath('clothes', 'tshirt'), audioPath: AssetHelper.getAudioPath('clothes', 'tshirt').replaceAll('assets/', ''), colorValue: 0xFFFFCC80),
-      FeatureModel(name: 'Shoes', imagePath: AssetHelper.getImagePath('clothes', 'shoes'), audioPath: AssetHelper.getAudioPath('clothes', 'shoes').replaceAll('assets/', ''), colorValue: 0xFFBCAAA4),
-      FeatureModel(name: 'Hat', imagePath: AssetHelper.getImagePath('clothes', 'hat'), audioPath: AssetHelper.getAudioPath('clothes', 'hat').replaceAll('assets/', ''), colorValue: 0xFFCE93D8),
+      const FeatureModel(name: 'T-shirt', imagePath: 'assets/images/clothes/tshirt.png', audioPath: 'audio/clothes/tshirt.mp3', colorValue: 0xFFB2DFDB),
+      const FeatureModel(name: 'Hat', imagePath: 'assets/images/clothes/hat.png', audioPath: 'audio/clothes/hat.mp3', colorValue: 0xFFFFE0B2),
+      const FeatureModel(name: 'Shoes', imagePath: 'assets/images/clothes/shoes.png', audioPath: 'audio/clothes/shoes.mp3', colorValue: 0xFFD7CCC8),
     ];
   }
 }
