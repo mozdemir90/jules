@@ -65,7 +65,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                   ),
                   const SizedBox(height: 24),
                   Image.asset(
-                    'assets/images/mascot/abu_karinca.png',
+                    'assets/images/mascot/mascot.png',
                     height: 150,
                     errorBuilder: (context, error, stackTrace) {
                       return const Icon(
