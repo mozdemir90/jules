@@ -69,7 +69,7 @@ class _CompletionPageState extends ConsumerState<CompletionPage> {
                     height: 150,
                     errorBuilder: (context, error, stackTrace) {
                       return const Icon(
-                        Icons.bug_report,
+                        Icons.face,
                         color: Colors.orange,
                         size: 150,
                       );

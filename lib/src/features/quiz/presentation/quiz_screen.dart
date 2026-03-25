@@ -114,6 +114,53 @@ class _QuizScreenState extends State<QuizScreen> {
     }
   }
 
+  Widget _buildOptionCard(int index) {
+    if (index >= _currentOptions.length) return const Expanded(child: SizedBox());
+
+    final option = _currentOptions[index];
+    String imagePath = '';
+    int bgColor = 0xFFEEEEEE;
+
+    if (option.runtimeType.toString() == 'NumberModel') {
+      imagePath = 'assets/images/numbers/${option.digit}.png';
+      bgColor = option.colorValue;
+    } else {
+      imagePath = option.imagePath;
+      bgColor = option.colorValue;
+    }
+
+    final isWobbling = _wobblingIndex[index] ?? false;
+
+    return Expanded(
+      child: GestureDetector(
+        onTap: () => _handleTap(index, option),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 100),
+          transform: Matrix4.translationValues(
+            isWobbling ? sin(DateTime.now().millisecondsSinceEpoch) * 10 : 0, 0, 0
+          ),
+          child: Card(
+            color: Color(bgColor),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24),
+            ),
+            elevation: 6,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.contain,
+                errorBuilder: (context, error, stackTrace) {
+                  return const Icon(Icons.image, size: 64, color: Colors.white);
+                },
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (_quizQuestions.isEmpty || _currentQuestionIndex >= _quizQuestions.length) {
@@ -124,81 +171,60 @@ class _QuizScreenState extends State<QuizScreen> {
       appBar: AppBar(
         title: Text('Question ${_currentQuestionIndex + 1} of ${_quizQuestions.length}'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(32.0),
-            child: IconButton(
-              iconSize: 100,
-              icon: const Icon(Icons.volume_up, color: Colors.blue),
-              onPressed: _playTargetAudio,
-            ),
-          ),
-          const Text(
-            'Find this one!',
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-          ),
-          const Spacer(),
-          Expanded(
-            flex: 4,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 32.0),
-              child: GridView.builder(
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 16,
-                  mainAxisSpacing: 16,
-                  childAspectRatio: 1.0,
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Expanded(
+                flex: 2,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    IconButton(
+                      iconSize: 100,
+                      icon: const Icon(Icons.volume_up, color: Colors.blue),
+                      onPressed: _playTargetAudio,
+                    ),
+                    const SizedBox(height: 16),
+                    const Text(
+                      'Find this one!',
+                      style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
                 ),
-                itemCount: _currentOptions.length,
-                itemBuilder: (context, index) {
-                  final option = _currentOptions[index];
-                  String imagePath = '';
-                  int bgColor = 0xFFEEEEEE;
-
-                  if (option.runtimeType.toString() == 'NumberModel') {
-                    imagePath = 'assets/images/numbers/${option.digit}.png';
-                    bgColor = option.colorValue;
-                  } else {
-                    imagePath = option.imagePath;
-                    bgColor = option.colorValue;
-                  }
-
-                  final isWobbling = _wobblingIndex[index] ?? false;
-
-                  return GestureDetector(
-                    onTap: () => _handleTap(index, option),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 100),
-                      transform: Matrix4.translationValues(
-                        isWobbling ? sin(DateTime.now().millisecondsSinceEpoch) * 10 : 0, 0, 0
-                      ),
-                      child: Card(
-                        color: Color(bgColor),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(24),
-                        ),
-                        elevation: 6,
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Image.asset(
-                            imagePath,
-                            fit: BoxFit.contain,
-                            errorBuilder: (context, error, stackTrace) {
-                              return const Icon(Icons.image, size: 64, color: Colors.white);
-                            },
-                          ),
-                        ),
+              ),
+              Expanded(
+                flex: 3,
+                child: Column(
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          _buildOptionCard(0),
+                          const SizedBox(width: 16),
+                          _buildOptionCard(1),
+                        ],
                       ),
                     ),
-                  );
-                },
+                    const SizedBox(height: 16),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          _buildOptionCard(2),
+                          const SizedBox(width: 16),
+                          _buildOptionCard(3),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ),
+              const SizedBox(height: 16),
+            ],
           ),
-          const Spacer(),
-        ],
+        ),
       ),
     );
   }

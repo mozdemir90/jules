@@ -134,7 +134,7 @@ class _FlashcardViewState extends State<FlashcardView>
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
-                            Icons.bug_report,
+                            Icons.face,
                             color: Colors.orange,
                             size: 40,
                           ),

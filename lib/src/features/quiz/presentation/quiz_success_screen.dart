@@ -50,7 +50,7 @@ class _QuizSuccessScreenState extends State<QuizSuccessScreen> {
                   height: 200,
                   errorBuilder: (context, error, stackTrace) {
                     return const Icon(
-                      Icons.bug_report,
+                      Icons.face,
                       color: Colors.orange,
                       size: 200,
                     );
