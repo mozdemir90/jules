@@ -152,7 +152,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvid
                 const SizedBox(height: 32),
                 ElevatedButton.icon(
                   icon: const Icon(Icons.star, size: 32),
-                  label: const Text('Play Quiz Mode!', style: TextStyle(fontSize: 24)),
+                  label: const Text('Quiz', style: TextStyle(fontSize: 24)),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber,
                     foregroundColor: Colors.white,

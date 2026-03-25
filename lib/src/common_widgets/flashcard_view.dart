@@ -123,7 +123,7 @@ class _FlashcardViewState extends State<FlashcardView>
                   child: ScaleTransition(
                     scale: _scaleAnimation,
                     child: Image.asset(
-                      'assets/images/mascot/abu_karinca.png',
+                      'assets/images/mascot/mascot.png',
                       width: 60,
                       height: 60,
                       errorBuilder: (context, error, stackTrace) {
@@ -134,7 +134,7 @@ class _FlashcardViewState extends State<FlashcardView>
                             shape: BoxShape.circle,
                           ),
                           child: const Icon(
-                            Icons.bug_report,
+                            Icons.face,
                             color: Colors.orange,
                             size: 40,
                           ),
