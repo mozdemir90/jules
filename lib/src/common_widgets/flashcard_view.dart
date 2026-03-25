@@ -92,56 +92,59 @@ class _FlashcardViewState extends State<FlashcardView>
                       ),
                     ),
                     const SizedBox(height: 24),
-                    // Kelime
+                    // Kelime & Mascot
                     Padding(
                       padding: const EdgeInsets.only(bottom: 16.0),
-                      child: Text(
-                        widget.title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .displayMedium
-                            ?.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 1.5,
-                              shadows: [
-                                const Shadow(
-                                  color: Colors.black26,
-                                  offset: Offset(4, 4),
-                                  blurRadius: 8,
+                      child: Wrap(
+                        alignment: WrapAlignment.center,
+                        crossAxisAlignment: WrapCrossAlignment.center,
+                        children: [
+                          Text(
+                            widget.title,
+                            style: Theme.of(context)
+                                .textTheme
+                                .displayMedium
+                                ?.copyWith(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: 1.5,
+                                  shadows: [
+                                    const Shadow(
+                                      color: Colors.black26,
+                                      offset: Offset(4, 4),
+                                      blurRadius: 8,
+                                    ),
+                                  ],
                                 ),
-                              ],
+                          ),
+                          const SizedBox(width: 8),
+                          // Abu Karınca Mascot
+                          ScaleTransition(
+                            scale: _scaleAnimation,
+                            child: Image.asset(
+                              'assets/images/mascot/mascot.png',
+                              width: 50,
+                              height: 50,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Container(
+                                  padding: const EdgeInsets.all(4),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                    shape: BoxShape.circle,
+                                  ),
+                                  child: const Icon(
+                                    Icons.face,
+                                    color: Colors.orange,
+                                    size: 30,
+                                  ),
+                                );
+                              },
                             ),
+                          ),
+                        ],
                       ),
                     ),
                   ],
-                ),
-                // Abu Karınca Mascot
-                Positioned(
-                  bottom: 8,
-                  right: 8,
-                  child: ScaleTransition(
-                    scale: _scaleAnimation,
-                    child: Image.asset(
-                      'assets/images/mascot/mascot.png',
-                      width: 60,
-                      height: 60,
-                      errorBuilder: (context, error, stackTrace) {
-                        return Container(
-                          padding: const EdgeInsets.all(8),
-                          decoration: const BoxDecoration(
-                            color: Colors.white,
-                            shape: BoxShape.circle,
-                          ),
-                          child: const Icon(
-                            Icons.face,
-                            color: Colors.orange,
-                            size: 40,
-                          ),
-                        );
-                      },
-                    ),
-                  ),
                 ),
               ],
             ),

@@ -43,7 +43,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with SingleTickerProvid
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('KidsLearn')),
+      appBar: AppBar(title: const Text('Kids Learn')),
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
